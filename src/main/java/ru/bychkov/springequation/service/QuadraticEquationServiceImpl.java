@@ -22,6 +22,11 @@ public class QuadraticEquationServiceImpl implements QuadraticEquationService{
         if (a == 0)
             throw IllegalEquationParamException.A_REQUIRED_NON_ZERO;
 
+        // 1.В нашем случае конечно рассчитать уравнение будет быстрее, чем загружать кэш из СУБД.
+        //  Поэтому читаем из БД с гипотетическим допущением, что уравнение может быть более сложным
+        // 2. Рассматривал вариант также и с NoSQL, но решил что для нашего простого примера реализовать
+        //  расчет на базе реляционной СУБД будет проще и быстрее.
+
         Optional<QuadraticEquation> cacheEquation = findById(a, b, c);
         if (cacheEquation.isPresent()) {
             QuadraticEquation equation = cacheEquation.get();
@@ -47,8 +52,8 @@ public class QuadraticEquationServiceImpl implements QuadraticEquationService{
     }
 
 
-    // Возврат лучше сделать через Pair<Double, Double>, если подключить зависимость Apache Common
-    // Движок для расчета уравнений лучше инкапсулировать отдельно, но такой небольшой объем кода решил не обособлять
+    // 3. Возврат лучше сделать через Pair<Double, Double>, если подключить зависимость Apache Common
+    // 4. Движок для расчета уравнений лучше инкапсулировать отдельно, но такой небольшой объем кода решил не обособлять
     private double[] calculateResult(final float a, final float b, final float c) {
 
         if (a == 0)
