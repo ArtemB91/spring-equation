@@ -1,0 +1,14 @@
+api-path: ""
+
+spring:
+  datasource:
+    url: jdbc:h2:mem:db
+    username: sa
+    password:
+
+  jpa:
+    show-sql: true
+
+logging:
+  level:
+    root: INFO
